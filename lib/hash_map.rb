@@ -21,6 +21,16 @@ class HashMap
     end
   end
 
+  def has?(key)
+    index = hash(key) % buckets.length
+
+    raise IndexError if index.negative? || index >= buckets.length
+
+    node = find_node(buckets[index], key)
+
+    !!(node&.key == key)
+  end
+
   private
 
   attr_accessor :buckets

@@ -14,5 +14,11 @@ class HashMapTest < Minitest::Test
     @hashmap.set('somekey', 'somevalue')
     assert_equal 1, @hashmap.length
   end
-end
 
+  def test_has
+    @hashmap.set('a', 5)
+    assert @hashmap.has?('a')
+
+    assert !@hashmap.has?('z')
+  end
+end
