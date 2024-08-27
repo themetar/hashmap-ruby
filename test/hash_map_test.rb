@@ -6,9 +6,13 @@ require 'minitest/autorun'
 require_relative '../lib/hash_map'
 
 class HashMapTest < Minitest::Test
+  def setup
+    @hashmap = HashMap.new
+  end
+
   def test_set
-    
-    assert(true)
+    @hashmap.set('somekey', 'somevalue')
+    assert_equal 1, @hashmap.length
   end
 end
 
