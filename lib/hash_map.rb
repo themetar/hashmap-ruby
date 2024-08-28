@@ -21,6 +21,18 @@ class HashMap
     end
   end
 
+  def get(key)
+    index = hash(key) % buckets.length
+
+    raise IndexError if index.negative? || index >= buckets.length
+
+    node = find_node(buckets[index], key)
+
+    return node.value if node && node.key == key
+
+    nil
+  end
+
   def has?(key)
     index = hash(key) % buckets.length
 

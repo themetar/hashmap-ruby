@@ -21,4 +21,11 @@ class HashMapTest < Minitest::Test
 
     assert !@hashmap.has?('z')
   end
+
+  def test_get
+    @hashmap.set('mykey', 101)
+    assert_equal 101, @hashmap.get('mykey')
+
+    assert_nil @hashmap.get('nonexistent')
+  end
 end
