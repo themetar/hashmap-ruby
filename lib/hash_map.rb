@@ -74,6 +74,10 @@ class HashMap
     return nil
   end
 
+  def clear
+    self.length = 0
+    buckets.length.times { |i| buckets[i] = nil }
+  end
 
   private
 

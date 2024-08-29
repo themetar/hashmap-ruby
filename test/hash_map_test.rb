@@ -44,4 +44,14 @@ class HashMapTest < Minitest::Test
     assert @hashmap.has?('otherkey')
     refute @hashmap.has?('mykey')
   end
+
+  def test_clear
+    10.times { |i| @hashmap.set('a' * (i + 1), 'b' * i) }
+    assert_equal 10, @hashmap.length
+    assert_equal 'bbbb', @hashmap.get('aaaaa')
+
+    @hashmap.clear
+    assert_equal 0, @hashmap.length
+    assert_nil @hashmap.get('aaaaa')
+  end
 end
