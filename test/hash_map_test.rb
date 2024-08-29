@@ -28,4 +28,20 @@ class HashMapTest < Minitest::Test
 
     assert_nil @hashmap.get('nonexistent')
   end
+
+  def test_remove
+    @hashmap.set('mykey', 101)
+    assert_equal 1, @hashmap.length
+    
+    @hashmap.set('otherkey', '200')
+    assert_equal 2, @hashmap.length
+
+    assert_equal 101, @hashmap.remove('mykey')
+    assert_equal 1, @hashmap.length
+
+    assert_nil @hashmap.remove('nonexistent')
+
+    assert @hashmap.has?('otherkey')
+    refute @hashmap.has?('mykey')
+  end
 end

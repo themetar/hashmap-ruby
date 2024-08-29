@@ -43,6 +43,38 @@ class HashMap
     !!(node&.key == key)
   end
 
+  def remove(key)
+    index = hash(key) % buckets.length
+
+    raise IndexError if index.negative? || index >= buckets.length
+
+    node = buckets[index]
+
+    return nil unless node
+
+    previous = nil
+
+    until node.key == key
+      previous = node
+      node = node.next
+    end
+
+    if node
+      if previous
+        previous.next = node.next
+      else
+        buckets[index] = node.next
+      end
+
+      self.length -= 1
+
+      return node.value
+    end
+
+    return nil
+  end
+
+
   private
 
   attr_accessor :buckets
