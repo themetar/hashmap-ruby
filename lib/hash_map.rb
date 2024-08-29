@@ -1,6 +1,8 @@
 require_relative 'hash_map/key_value'
 
 class HashMap
+  include Enumerable
+
   attr_reader :length
 
   def set(key, value)
@@ -77,6 +79,25 @@ class HashMap
   def clear
     self.length = 0
     buckets.length.times { |i| buckets[i] = nil }
+  end
+
+  def each
+    return to_enum unless block_given?
+
+    buckets.each do |node|
+      while node
+        yield node.key, node.value
+        node = node.next
+      end
+    end
+  end
+
+  def keys
+    each.map { _1 }
+  end
+
+  def values
+    each.map { _2 }
   end
 
   private

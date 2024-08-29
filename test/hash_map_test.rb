@@ -54,4 +54,33 @@ class HashMapTest < Minitest::Test
     assert_equal 0, @hashmap.length
     assert_nil @hashmap.get('aaaaa')
   end
+
+  def test_entries
+    expected = [
+      ['a', 100],
+      ['b', 200],
+      ['c', 300],
+      ['d', 400],
+    ]
+
+    expected.each { |k, v| @hashmap.set(k, v) }
+
+    assert_equal expected, @hashmap.entries.sort { |a, b| a.first <=> b.first }
+  end
+
+  def test_keys
+    expected = ['a', 'b', 'c', 'd']
+
+    expected.each { |k, v| @hashmap.set(k, rand(100)) }
+
+    assert_equal expected, @hashmap.keys.sort
+  end
+
+  def test_values
+    expected = [5, 14, 15, 32]
+
+    expected.each { |v| @hashmap.set('k' + v.to_s, v) }
+
+    assert_equal expected, @hashmap.values.sort
+  end
 end
