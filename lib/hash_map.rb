@@ -10,25 +10,18 @@ class HashMap
 
     raise IndexError if index.negative? || index >= buckets.length
 
-    node = find_node(buckets[index], key)
+    _, node = buckets[index] && buckets[index].find_prev_and_node(key)
 
     if node && node.key == key
       node.value = value
-    elsif node
-      node.next = KeyValue.new(key, value)
-      self.length += 1
     else
-      buckets[index] = KeyValue.new(key, value)
+      buckets[index] = KeyValue.new(key, value, buckets[index])
       self.length += 1
     end
   end
 
   def get(key)
-    index = hash(key) % buckets.length
-
-    raise IndexError if index.negative? || index >= buckets.length
-
-    node = find_node(buckets[index], key)
+    node = get_node(key)
 
     return node.value if node && node.key == key
 
@@ -36,13 +29,9 @@ class HashMap
   end
 
   def has?(key)
-    index = hash(key) % buckets.length
+    node = get_node(key)
 
-    raise IndexError if index.negative? || index >= buckets.length
-
-    node = find_node(buckets[index], key)
-
-    !!(node&.key == key)
+    !!node
   end
 
   def remove(key)
@@ -54,18 +43,13 @@ class HashMap
 
     return nil unless node
 
-    previous = nil
-
-    until node.key == key
-      previous = node
-      node = node.next
-    end
+    previous, node = node.find_prev_and_node(key)
 
     if node
       if previous
-        previous.next = node.next
+        previous.next_node = node.next_node
       else
-        buckets[index] = node.next
+        buckets[index] = node.next_node
       end
 
       self.length -= 1
@@ -87,7 +71,7 @@ class HashMap
     buckets.each do |node|
       while node
         yield node.key, node.value
-        node = node.next
+        node = node.next_node
       end
     end
   end
@@ -119,12 +103,14 @@ class HashMap
     hash_code
   end
 
-  def find_node(node, key)
-    return nil unless node
+  def get_node(key)
+    index = hash(key) % buckets.length
 
-    until node.key == key || node.next.nil?
-      node = node.next
-    end
+    raise IndexError if index.negative? || index >= buckets.length
+
+    return nil unless buckets[index]
+
+    _, node = buckets[index].find_prev_and_node(key)
 
     node
   end
