@@ -3,6 +3,8 @@ require_relative 'hash_map/key_value'
 class HashMap
   include Enumerable
 
+  LOAD_FACTOR = 0.75
+
   attr_reader :length
 
   def set(key, value)
@@ -15,6 +17,14 @@ class HashMap
     if node && node.key == key
       node.value = value
     else
+      if length + 1 > buckets.length * LOAD_FACTOR
+        grow_buckets!
+
+        index = hash(key) % buckets.length
+
+        raise IndexError if index.negative? || index >= buckets.length
+      end
+
       buckets[index] = KeyValue.new(key, value, buckets[index])
       self.length += 1
     end
@@ -113,5 +123,19 @@ class HashMap
     _, node = buckets[index].find_prev_and_node(key)
 
     node
+  end
+
+  def grow_buckets!
+    new_buckets = Array.new(buckets.length * 2)
+
+    each do |key, value|
+      index = hash(key) % new_buckets.length
+
+      raise IndexError if index.negative? || index >= new_buckets.length
+
+      new_buckets[index] = KeyValue.new(key, value, new_buckets[index])
+    end
+
+    self.buckets = new_buckets
   end
 end

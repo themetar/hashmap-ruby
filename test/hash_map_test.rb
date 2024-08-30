@@ -15,6 +15,15 @@ class HashMapTest < Minitest::Test
     assert_equal 1, @hashmap.length
   end
 
+  def test_setting_more_values
+    ('aa'...'bb').each_with_index do |key, i|
+      @hashmap.set(key, i)
+    end
+
+    assert_equal 23, @hashmap.get('ax')
+    assert_equal 26, @hashmap.get('ba')
+  end
+
   def test_has
     @hashmap.set('a', 5)
     assert @hashmap.has?('a')
