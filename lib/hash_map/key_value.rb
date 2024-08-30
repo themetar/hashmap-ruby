@@ -16,6 +16,10 @@ class HashMap
       [previous, node]
     end
 
+    def inspect
+      "{#{key}, #{value}}" + (next_node ? " -> #{next_node.inspect}" : '')
+    end
+
     def initialize(key, value, next_node = nil)
       @key = key
       @value = value
