@@ -1,5 +1,4 @@
 class HashMap
-
   class KeyValue
     attr_reader :key
     attr_accessor :value, :next_node
@@ -12,7 +11,7 @@ class HashMap
         previous = node
         node = node.next_node
       end
-  
+
       [previous, node]
     end
 
@@ -26,5 +25,4 @@ class HashMap
       @next_node = next_node
     end
   end
-
 end

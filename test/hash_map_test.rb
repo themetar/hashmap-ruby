@@ -41,7 +41,7 @@ class HashMapTest < Minitest::Test
   def test_remove
     @hashmap.set('mykey', 101)
     assert_equal 1, @hashmap.length
-    
+
     @hashmap.set('otherkey', '200')
     assert_equal 2, @hashmap.length
 
@@ -69,18 +69,18 @@ class HashMapTest < Minitest::Test
       ['a', 100],
       ['b', 200],
       ['c', 300],
-      ['d', 400],
+      ['d', 400]
     ]
 
     expected.each { |k, v| @hashmap.set(k, v) }
 
-    assert_equal expected, @hashmap.entries.sort { |a, b| a.first <=> b.first }
+    assert_equal(expected, @hashmap.entries.sort { |a, b| a.first <=> b.first })
   end
 
   def test_keys
-    expected = ['a', 'b', 'c', 'd']
+    expected = %w[a b c d]
 
-    expected.each { |k, v| @hashmap.set(k, rand(100)) }
+    expected.each { |k| @hashmap.set(k, rand(100)) }
 
     assert_equal expected, @hashmap.keys.sort
   end
@@ -88,7 +88,7 @@ class HashMapTest < Minitest::Test
   def test_values
     expected = [5, 14, 15, 32]
 
-    expected.each { |v| @hashmap.set('k' + v.to_s, v) }
+    expected.each { |v| @hashmap.set("k#{v}", v) }
 
     assert_equal expected, @hashmap.values.sort
   end

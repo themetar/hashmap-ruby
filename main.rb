@@ -7,7 +7,7 @@ end
 test = HashMap.new
 
 # 1. Populate
-puts title "Populate hashmap"
+puts title 'Populate hashmap'
 
 test.set('apple', 'red')
 test.set('banana', 'yellow')
@@ -25,7 +25,7 @@ test.set('lion', 'golden')
 pp test
 
 # 2. Overwrite
-puts title "Change some values"
+puts title 'Change some values'
 
 test.set('carrot', 'very tasty')
 test.set('dog', 'spot')
@@ -34,14 +34,14 @@ test.set('frog', 'says croak!')
 pp test
 
 # 3. Exceed load
-puts title "Add one more"
+puts title 'Add one more'
 
 test.set('moon', 'silver')
 
 pp test
 
 # 4. Overwrite some more
-puts title "Change some more values"
+puts title 'Change some more values'
 
 test.set('jacket', 'fashionable')
 test.set('kite', 'flying high')
@@ -64,7 +64,8 @@ puts "#values are #{test.values}"
 puts "#remove(banana) is #{test.remove('banana')}"
 puts "#remove(hat) is #{test.remove('hat')}"
 puts "#entries are #{test.entries}"
-puts "#clear"; test.clear
+puts '#clear'
+test.clear
 puts "#entries are #{test.entries}"
 
 puts

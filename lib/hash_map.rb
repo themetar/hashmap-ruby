@@ -12,7 +12,7 @@ class HashMap
 
     raise IndexError if index.negative? || index >= buckets.length
 
-    _, node = buckets[index] && buckets[index].find_prev_and_node(key)
+    _, node = buckets[index]&.find_prev_and_node(key)
 
     if node && node.key == key
       node.value = value
@@ -67,7 +67,7 @@ class HashMap
       return node.value
     end
 
-    return nil
+    nil
   end
 
   def clear
